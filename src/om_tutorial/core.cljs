@@ -8,16 +8,24 @@
 
 ;; define your app data so that it doesn't get over-written on reload
 
-(defonce app-state (atom {:text "Hello world!"}))
+(defonce app-state (atom {:app0 "Hello world!"
+                          :app1 "Good bye world!"}))
 
 (om/root
   (fn [data owner]
     (reify om/IRender
       (render [_]
-        (dom/h1 nil (:text data)))))
+        (dom/h1 nil (:app0 data)))))
   app-state
-  {:target (. js/document (getElementById "app"))})
+  {:target (. js/document (getElementById "app0"))})
 
+(om/root
+  (fn [data owner]
+    (reify om/IRender
+      (render [_]
+        (dom/h1 nil (:app1 data)))))
+  app-state
+  {:target (. js/document (getElementById "app1"))})
 
 (defn on-js-reload []
   ;; optionally touch your app-state to force rerendering depending on
